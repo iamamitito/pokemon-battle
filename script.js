@@ -37,7 +37,7 @@ function showUserOption(optionId){
         userImg.src = 'img/squirtle.png';
         userImg.width = "70"; 
 
-    } else if ( optionId === 'bulbasaur'){
+    } else {
         userImg.src = 'img/bulbasaur.png';
         userImg.width = "70"; 
     }
