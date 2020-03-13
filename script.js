@@ -87,7 +87,7 @@ function showComputerOption(computerSelection){
 function restartGame() {
     playerScore = 0;
     computerScore = 0;
-    para.textContent = "Start! click on your option.";
+    para.textContent = "Start the battle! Choose your pokémon!";
     para2.textContent = "You: 0 Computer: 0";
     result.removeChild(button);
     userOption.textContent = "";
