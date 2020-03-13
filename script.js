@@ -1,6 +1,7 @@
 const charmander = document.querySelector('#charmander');
 const squirtle = document.querySelector('#squirtle')
 const bulbasaur = document.querySelector('#bulbasaur');
+const pikachu = document.querySelector('#pikachu');
 const optionsContainer = document.querySelector('.options-container');
 const userOptions = document.querySelector("option");
 const result = document.querySelector('#result');
@@ -18,11 +19,22 @@ let computerOption = document.createElement('span');
 let playerScore = 0;
 let computerScore = 0;
 
-para.textContent = "Start! click on your option.";
+/* pikachu is not available to use until the user gets 5 points */
+pikachu.style.display= 'none';
+
+function showPikachu() {
+    if (playerScore >= 5) {
+        pikachu.style.display= 'block';
+    }
+}
+
+
+
+para.textContent = "Start the battle! Choose your pokémon!";
 para2.textContent = "You: 0 Computer: 0";
 
 function computerPlay() {
-    const options = ["fire", "water", "grass"];
+    const options = ["fire", "water", "grass", "electric"];
     return options[Math.floor(Math.random() * options.length)];
 }
 
@@ -37,7 +49,11 @@ function showUserOption(optionId){
         userImg.src = 'img/squirtle.png';
         userImg.width = "70"; 
 
-    } else {
+    } else if (optionId === 'pikachu'){
+        userImg.src = 'img/pikachu.png';
+        userImg.width = "65"; 
+
+    }else {
         userImg.src = 'img/bulbasaur.png';
         userImg.width = "70"; 
     }
@@ -52,6 +68,10 @@ function showComputerOption(computerSelection){
     } else if (computerSelection === 'water'){
         computerImg.src = 'img/squirtle.png';
         computerImg.width = "70"; 
+
+    } else if (computerSelection === 'electric'){
+        computerImg.src = 'img/pikachu.png';
+        computerImg.width = "65"; 
 
     } else {
         computerImg.src = 'img/bulbasaur.png';
@@ -71,11 +91,11 @@ function restartGame() {
     computerImg.src = '';
     optionsContainer.style.display= 'flex';
     choicesContainer.style.display= 'flex';
-    
+    pikachu.style.display= 'none';  
 }
 
 function scoreTracker() {
-    if (playerScore === 5) {
+    if (playerScore >= 10) {
         para.textContent = "Congrats! You're a great trainer!";
         button.textContent = "Restart game"
         result.appendChild(button);
@@ -84,7 +104,7 @@ function scoreTracker() {
         button.addEventListener("click", function(){
             restartGame()
           })
-    } else if (computerScore === 5) {
+    } else if (computerScore >= 10) {
         para.textContent = "You're not such a good trainer, are you?";
         button.textContent = "Restart game"
         result.appendChild(button);
@@ -114,7 +134,29 @@ function playRound(playerSelection, computerSelection, optionId){
             showComputerOption(computerSelection);
             scoreTracker();
 
-        } else {
+        } else if (playerSelection === "electric" && computerSelection === "fire" || playerSelection === "fire" && computerSelection === "electric") {
+            para.textContent = `It's a tie, ${playerSelection} does NOT beat ${computerSelection}`;
+            para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+
+        } else if (playerSelection === "electric" && computerSelection === "water" || playerSelection === "grass" && computerSelection === "electric") {
+            para.textContent = `You win! ${playerSelection} beats ${computerSelection} by 2 points!`;
+            playerScore += 2;
+            para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+            scoreTracker();
+
+        } else if (playerSelection === "electric" && computerSelection === "grass" || playerSelection === "water" && computerSelection === "electric" ) {
+            para.textContent = `You lose! ${computerSelection} beats ${playerSelection} by 2 points`;
+            computerScore += 2;
+            para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+            scoreTracker();
+
+        }else {
             para.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
             computerScore++;
             para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
@@ -122,6 +164,7 @@ function playRound(playerSelection, computerSelection, optionId){
             showComputerOption(computerSelection);
             scoreTracker();
         }
+    showPikachu();
 }
 
 
@@ -134,6 +177,9 @@ squirtle.addEventListener('click', function(){
 bulbasaur.addEventListener('click', function(){
     playRound("grass", computerPlay(), this.id)
   });
+pikachu.addEventListener('click', function(){
+    playRound("electric", computerPlay(), this.id)
+});
 
   result.appendChild(para);
   scores.appendChild(para2);
