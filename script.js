@@ -50,40 +50,40 @@ function showUserOption(optionId) {
     userOption.textContent = "You";
     if (optionId === 'charmander') {
         userImg.src = 'img/usercharmander.png';
-        userImg.width = "70";
+        userImg.width = "100";
 
     } else if (optionId === 'squirtle') {
         userImg.src = 'img/usersquirtle.png';
-        userImg.width = "70";
+        userImg.width = "100";
 
 
     } else if (optionId === 'pikachu') {
         userImg.src = 'img/userpikachu.png';
-        userImg.width = "70";
+        userImg.width = "100";
 
     } else {
         userImg.src = 'img/userbulbasaur.png';
-        userImg.width = "70";
+        userImg.width = "100";
     }
 }
 
 function showComputerOption(computerSelection) {
     computerOption.textContent = "Computer";
     if (computerSelection === 'fire') {
-        computerImg.src = 'img/charmander.png';
-        computerImg.width = "70";
+        computerImg.src = 'img/computercharmander.png';
+        computerImg.width = "50";
 
     } else if (computerSelection === 'water') {
-        computerImg.src = 'img/squirtle.png';
-        computerImg.width = "70";
+        computerImg.src = 'img/computersquirtle.png';
+        computerImg.width = "50";
 
     } else if (computerSelection === 'electric') {
-        computerImg.src = 'img/pikachu.png';
-        computerImg.width = "70";
+        computerImg.src = 'img/computerpikachu.png';
+        computerImg.width = "50";
 
     } else {
-        computerImg.src = 'img/bulbasaur.png';
-        computerImg.width = "70";
+        computerImg.src = 'img/computerbulbasaur.png';
+        computerImg.width = "50";
     }
 
 }
