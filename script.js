@@ -71,19 +71,19 @@ function showComputerOption(computerSelection) {
     computerOption.textContent = "Computer";
     if (computerSelection === 'fire') {
         computerImg.src = 'img/computercharmander.png';
-        computerImg.width = "50";
+        computerImg.width = "45";
 
     } else if (computerSelection === 'water') {
         computerImg.src = 'img/computersquirtle.png';
-        computerImg.width = "50";
+        computerImg.width = "45";
 
     } else if (computerSelection === 'electric') {
         computerImg.src = 'img/computerpikachu.png';
-        computerImg.width = "50";
+        computerImg.width = "45";
 
     } else {
         computerImg.src = 'img/computerbulbasaur.png';
-        computerImg.width = "50";
+        computerImg.width = "45";
     }
 
 }
@@ -140,7 +140,7 @@ function playRound(playerSelection, computerSelection, optionId) {
         showComputerOption(computerSelection);
 
     } else if (playerSelection === "fire" && computerSelection === "grass" || playerSelection === "water" && computerSelection === "fire" || playerSelection === "grass" && computerSelection === "water") {
-        para.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
+        para.textContent = `You win, ${playerSelection} beats ${computerSelection}`;
         playerScore++;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
@@ -154,7 +154,7 @@ function playRound(playerSelection, computerSelection, optionId) {
         showComputerOption(computerSelection);
 
     } else if (playerSelection === "electric" && computerSelection === "water" || playerSelection === "grass" && computerSelection === "electric") {
-        para.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
+        para.textContent = `You win, ${playerSelection} beats ${computerSelection}`;
         playerScore++;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
@@ -170,7 +170,7 @@ function playRound(playerSelection, computerSelection, optionId) {
         scoreTracker();
 
     } else {
-        para.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+        para.textContent = `You lose, ${computerSelection} beats ${playerSelection}`;
         computerScore++;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
