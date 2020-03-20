@@ -26,6 +26,7 @@ const muteButton = document.querySelector('.mute-button');
 let userImg = document.createElement('img');
 let computerImg = document.createElement('img');
 let battleDescription = document.createElement('p');
+let finalMessage = document.querySelector('.final-message');
 let button = document.createElement('button');
 let userOption = document.createElement('span');
 let computerOption = document.createElement('span');
@@ -94,31 +95,38 @@ function showComputerOption(computerSelection) {
 function restartGame() {
     battleDescription.textContent = "Start the battle! Choose your pokémon!";
     result.removeChild(button);
-    userOption.textContent = "";
-    computerOption.textContent = "";
+    userOption.textContent = '';
+    computerOption.textContent = '';
     userImg.src = '';
     computerImg.src = '';
     optionsContainer.style.visibility = 'visible';
+    choicesContainer.style.display = 'flex';
     pikachu.style.display = 'none';
     audio.pause();
     audio.currentTime = 0;
     audio.volume = 1;
     playerHP.value = 100;
     computerHP.value = 100;
+    finalMessage.textContent = '';
 }
 
 function scoreTracker() {
     if (computerHP.value === 0) {
-        button.textContent = "Battle again!"
+        button.textContent = 'Battle again?';
         result.appendChild(button);
         optionsContainer.style.visibility = 'hidden';
+        choicesContainer.style.display = 'none';
+        battleDescription.textContent = '';
+        finalMessage.textContent = 'Congratulations! You are a great trainer!';
         button.addEventListener("click", function () {
             restartGame()
         })
     } else if (playerHP.value === 0) {
-        button.textContent = "Battle again!"
+        button.textContent = 'Battle again?';
         result.appendChild(button);
         optionsContainer.style.visibility = 'hidden';
+        choicesContainer.style.display = 'none';
+        battleDescription.textContent = 'You are not such a good good trainer, are you? Maybe next time.';
         button.addEventListener("click", function () {
             restartGame()
         })
