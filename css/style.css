@@ -6,59 +6,70 @@
 
 body {
     font-family: 'Press Start 2P', cursive;
-    background-color: skyblue;
+    background:#222;
 
 }
 .container {
     width: fit-content;
     margin: auto;
-    margin-top: 20px;
-    min-height: 60vh;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-image: url('../img/battlefield.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 700px;
+    border-radius: 1.5rem;
+    box-shadow:0 0 50px rgba(0,0,0,0.5) inset,0 1px rgba(212,152,125,0.2) inset,0 5px 15px rgba(0,0,0,0.5);
 }
 .container h1 {
-    width: 70vw;
     padding: 15px;
     border: 10px solid black;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
     background-color: white;
     text-align: center;
+    
 }
 #result {
     text-align: center;
-    margin-top: 30px;
     font-size: 15px;
+    color:white;
+    text-shadow: 1px 1px 2px #000000;
 }
 .options-container {
     width: fit-content;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 50px;
+    margin-top: 5%;
 }
 .option {
     cursor: pointer;
-    background-color: white;
-    border: 2px solid black;
+    background-color: rgba(255, 255, 255, 0.5);
     padding: 2px;
-    margin: 1px;
+    margin: 2px;
+    margin-bottom: 10px;
 }
 
 .results-container {
-    width: 100%;
     text-align: center;
-    margin-top: 50px;
-    background-color: green;
     color: white;
-    padding-top: 40px;
-    border-top: 5px solid black;
     bottom: 0;
-    min-height: 30vh;
+}
+
+.battle-field {
+    height: 40vh;
+    padding-top:15%;
 }
 .choices {
     display: flex;
     width: fit-content;
     margin: auto;
-    margin-bottom: 20px;
     text-align: center;
+    color: white;
+    text-shadow: 1px 1px 2px #000000;
 }
 .choices img {
     margin-top: 10px;
@@ -66,12 +77,12 @@ body {
 
 #result button {
     padding: 10px;
-    background-color: white;
-    border: 5px solid black;
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.863);
+    border: 3px solid black;
+    border-radius: 5px;
     font-size: 15px;
-    margin-top: 20px;
 }
-
 
 #userChoice, #computerChoice {
     padding: 15px;
@@ -81,32 +92,62 @@ body {
     margin: 10px;
 }
 
-#scores {
-    margin-top: 20px;
-}
 .mute-button {
-    background-color: white;
-    width: fit-content;
     cursor: pointer;
-    border-radius: 3rem;
     float: right;
-    margin:15px;
-    margin-top: 40px;
+    margin-right: 10px;
+    margin-top: 10px;
 }
+
+.players-hp {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    text-shadow: 1px 1px 2px #000000;
+
+}
+.hp-box {
+    margin: 5px;
+    font-size: 10px;
+}
+
+progress {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    height: 20px;
+    width: 30vw;
+    margin: 5px;
+  }
+  progress::-webkit-progress-bar {
+    background: #ccc;
+    box-shadow: inset 0px 0px 10px 5px #aaa;
+    border-radius: 20px;
+  }
+  progress::-webkit-progress-value {
+    background-image: repeating-linear-gradient(45deg, #FF94AA, #FF94AA 8px, #FF7799 8px, #FF7799 16px);
+    border-radius: 20px;
+  }
+  progress::before {
+    content: attr(value);
+    position: relative;
+    display: block;
+    font: caption;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 1px 2px #000000;
+
+  }
 @media screen and (max-width: 690px) {
     .container h1 {
-        width: inherit;
-    }
-    .options-container {
-        justify-content: center;
-        width: 80vw;
+        font-size: 21px;
     }
     .option {
-        width:25vw;
+        width: 15vw;
         text-align: center;
     }
     .option img {
-        width: 50px;
+        width: 40px;
     }
     .mute-button img {
         width: 30px;
@@ -115,4 +156,25 @@ body {
     #result {
         font-size: 8px;
     }
+    .container {
+        height: 100vh;
+    }
+    .battle-field {
+        padding-top:55%;
+    }
+   
+    @media screen and (min-height: 700px) {
+        .battle-field {
+            padding-top: 50%;
+        }
+    
+    }
+    @media screen and (min-height: 800px) {
+        .battle-field {
+            padding-top: 60%;
+            height: 30vh;
+        }
+    
+    }
+
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,39 +9,50 @@
     <link rel="icon" href="img/favicon.ico">
     <title>Pokémon Battle</title>
 </head>
+
 <body>
     <div class="container">
         <h1>Pokémon Battle!</h1>
-        <div class="choices">
-            <div id="userChoice"></div>
-            <div id="computerChoice"></div>
-        </div>
-        <div id="result"></div>
-        <div class="options-container">
-                <div class="option" id="charmander"> 
-                    <img src="img/computercharmander.png" width="50" alt="">
-                </div>
-                <div class="option" id="squirtle"> 
-                    <img src="img/computersquirtle.png" width="50" alt="">
-                </div>
-                <div class="option" id="bulbasaur"> 
-                    <img src="img/computerbulbasaur.png" width="50" alt=""> 
-                </div>
-                <div class="option" id="pikachu"> 
-                    <img src="img/computerpikachu.png" width="50" alt=""> 
-                </div>
-        </div>
-    </div>
-    <div class="results-container">
-        <h2>Scores:</h2>
-        <div id="scores"></div>
         <div class="mute-button">
-                <img src="img/mute.png"  height="40"alt="">
+                <img src="img/mute.png" height="40" alt="">
+            </div>
+        <div class="battle-field">
+            <div class="choices">
+                <div id="userChoice"></div>
+                <div id="computerChoice"></div> <br>
+            </div>
+            <div id="result"></div>
+        </div>
+        <div class="results-container">
+            <div class="players-hp">
+                <div class="player-hp hp-box">
+                    <label for="file">Player HP:</label>
+                    <progress id="player-hp" value="100" max="100">hola</progress>
+                </div>
+                <div class="computer-hp hp-box">
+                    <label for="file">Computer HP:</label>
+                    <progress id="computer-hp" value="100" max="100">hola</progress>
+                </div>
+            </div>
+        </div>
+        <div class="options-container">
+            <div class="option" id="charmander">
+                <img src="img/computercharmander.png" width="50" alt="">
+            </div>
+            <div class="option" id="squirtle">
+                <img src="img/computersquirtle.png" width="50" alt="">
+            </div>
+            <div class="option" id="bulbasaur">
+                <img src="img/computerbulbasaur.png" width="50" alt="">
+            </div>
+            <div class="option" id="pikachu">
+                <img src="img/computerpikachu.png" width="50" alt="">
+            </div>
         </div>
     </div>
 
     <audio class="sound" src="sounds/pokemon.wav"></audio>
-
- <script src="script.js"></script>   
+    <script src="script.js"></script>
 </body>
+
 </html>

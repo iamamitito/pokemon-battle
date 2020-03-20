@@ -1,44 +1,48 @@
 const body = document.querySelector('body');
+
+/* Pokémon */
 const charmander = document.querySelector('#charmander');
 const squirtle = document.querySelector('#squirtle')
 const bulbasaur = document.querySelector('#bulbasaur');
 const pikachu = document.querySelector('#pikachu');
+
+/* Divs that contain the progress of player and computer */
+const playerHP = document.querySelector('#player-hp');
+const computerHP = document.querySelector('#computer-hp');
+
+/* Divs that contain the pokemon the player can choose */
 const optionsContainer = document.querySelector('.options-container');
 const userOptions = document.querySelector('option');
-const resultsContainer = document.querySelector('.results-container')
-const result = document.querySelector('#result');
-const scores = document.querySelector('#scores');
+
+
+/* Divs that display player and computer's choices */
 const userChoice = document.querySelector('#userChoice');
 const computerChoice = document.querySelector('#computerChoice');
 const choicesContainer = document.querySelector('.choices');
+
+const result = document.querySelector('#result');
 const audio = document.querySelector('.sound');
 const muteButton = document.querySelector('.mute-button');
 let userImg = document.createElement('img');
 let computerImg = document.createElement('img');
-let para = document.createElement('p');
-let para2 = document.createElement('p');
+let battleDescription = document.createElement('p');
 let button = document.createElement('button');
 let userOption = document.createElement('span');
 let computerOption = document.createElement('span');
-let playerScore = 0;
-let computerScore = 0;
+
 
 /* pikachu is not available to use until the user gets 5 points */
 pikachu.style.display = 'none';
 
-/* Pikachu is displayed along with style changes */
+/* Pikachu is displayed after the user is "half winning" */
 function showPikachu() {
-    if (playerScore >= 5) {
+    if (computerHP.value <= 50) {
         pikachu.style.display = 'block';
-        body.style.backgroundColor = '#d7acec';
-        resultsContainer.style.backgroundColor = '#6355b3';
     }
 }
 
 
-
-para.textContent = "Start the battle! Choose your pokémon!";
-para2.textContent = "You: 0 Computer: 0";
+battleDescription.textContent = "Start the battle! Choose your pokémon!";
 
 function computerPlay() {
     const options = ["fire", "water", "grass", "electric"];
@@ -88,41 +92,34 @@ function showComputerOption(computerSelection) {
 
 }
 function restartGame() {
-    playerScore = 0;
-    computerScore = 0;
-    para.textContent = "Start the battle! Choose your pokémon!";
-    para2.textContent = "You: 0 Computer: 0";
+    battleDescription.textContent = "Start the battle! Choose your pokémon!";
     result.removeChild(button);
     userOption.textContent = "";
     computerOption.textContent = "";
     userImg.src = '';
     computerImg.src = '';
-    optionsContainer.style.display = 'flex';
-    choicesContainer.style.display = 'flex';
+    optionsContainer.style.visibility = 'visible';
+    choicesContainer.style.visibility = 'visible';
     pikachu.style.display = 'none';
-    body.style.backgroundColor = 'skyblue';
-    resultsContainer.style.backgroundColor = 'green';
     audio.pause();
     audio.currentTime = 0;
     audio.volume = 1;
+    playerHP.value = 100;
+    computerHP.value = 100;
 }
 
 function scoreTracker() {
-    if (playerScore >= 10) {
-        para.textContent = "Congrats! You're a great trainer!";
+    if (computerHP.value === 0) {
         button.textContent = "Restart game"
         result.appendChild(button);
-        optionsContainer.style.display = 'none';
-        choicesContainer.style.display = 'none';
+        optionsContainer.style.visibility = 'hidden';
         button.addEventListener("click", function () {
             restartGame()
         })
-    } else if (computerScore >= 10) {
-        para.textContent = "You're not such a good trainer, are you?";
+    } else if (playerHP.value === 0) {
         button.textContent = "Restart game"
         result.appendChild(button);
-        optionsContainer.style.display = 'none';
-        choicesContainer.style.display = 'none';
+        optionsContainer.style.visibility = 'hidden';
         button.addEventListener("click", function () {
             restartGame()
         })
@@ -134,47 +131,41 @@ function scoreTracker() {
 
 function playRound(playerSelection, computerSelection, optionId) {
     if (computerSelection === playerSelection) {
-        para.textContent = `It's a tie! You both chose ${optionId}`;
-        para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+        battleDescription.textContent = `It's a tie! You both chose ${optionId}`;
         showUserOption(optionId);
         showComputerOption(computerSelection);
 
     } else if (playerSelection === "fire" && computerSelection === "grass" || playerSelection === "water" && computerSelection === "fire" || playerSelection === "grass" && computerSelection === "water") {
-        para.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
-        playerScore++;
-        para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+        battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
         showUserOption(optionId);
         showComputerOption(computerSelection);
+        computerHP.value -= 10;
         scoreTracker();
 
     } else if (playerSelection === "electric" && computerSelection === "fire" || playerSelection === "fire" && computerSelection === "electric") {
-        para.textContent = `It's a tie! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} does NOT beat ${computerSelection}`;
-        para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+        battleDescription.textContent = `It's a tie! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} does NOT beat ${computerSelection}`;
         showUserOption(optionId);
         showComputerOption(computerSelection);
 
     } else if (playerSelection === "electric" && computerSelection === "water" || playerSelection === "grass" && computerSelection === "electric") {
-        para.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
-        playerScore++;
-        para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+        battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
         showUserOption(optionId);
         showComputerOption(computerSelection);
+        computerHP.value -= 10;
         scoreTracker();
 
     } else if (playerSelection === "electric" && computerSelection === "grass" || playerSelection === "water" && computerSelection === "electric") {
-        para.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
-        computerScore++;
-        para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+        battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
         showUserOption(optionId);
         showComputerOption(computerSelection);
+        playerHP.value -= 10;
         scoreTracker();
 
     } else {
-        para.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
-        computerScore++;
-        para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
+        battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
         showUserOption(optionId);
         showComputerOption(computerSelection);
+        playerHP.value -= 10;
         scoreTracker();
     }
     showPikachu();
@@ -207,8 +198,7 @@ squirtle.addEventListener("click", startSound);
 bulbasaur.addEventListener("click", startSound);
 muteButton.addEventListener("click", muteSound);
 
-result.appendChild(para);
-scores.appendChild(para2);
+result.appendChild(battleDescription);
 userChoice.appendChild(userOption);
 userChoice.appendChild(userImg);
 computerChoice.appendChild(computerOption);
