@@ -25,6 +25,7 @@ body {
 #result {
     text-align: center;
     margin-top: 30px;
+    font-size: 15px;
 }
 .options-container {
     width: fit-content;
@@ -110,5 +111,8 @@ body {
     .mute-button img {
         width: 30px;
         height: 30px;
+    }
+    #result {
+        font-size: 8px;
     }
 }

@@ -134,13 +134,13 @@ function scoreTracker() {
 
 function playRound(playerSelection, computerSelection, optionId) {
     if (computerSelection === playerSelection) {
-        para.textContent = `It's a tie, you both chose ${optionId}`;
+        para.textContent = `It's a tie! You both chose ${optionId}`;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
         showComputerOption(computerSelection);
 
     } else if (playerSelection === "fire" && computerSelection === "grass" || playerSelection === "water" && computerSelection === "fire" || playerSelection === "grass" && computerSelection === "water") {
-        para.textContent = `You win, ${playerSelection} beats ${computerSelection}`;
+        para.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
         playerScore++;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
@@ -148,13 +148,13 @@ function playRound(playerSelection, computerSelection, optionId) {
         scoreTracker();
 
     } else if (playerSelection === "electric" && computerSelection === "fire" || playerSelection === "fire" && computerSelection === "electric") {
-        para.textContent = `It's a tie, ${playerSelection} does NOT beat ${computerSelection}`;
+        para.textContent = `It's a tie! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} does NOT beat ${computerSelection}`;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
         showComputerOption(computerSelection);
 
     } else if (playerSelection === "electric" && computerSelection === "water" || playerSelection === "grass" && computerSelection === "electric") {
-        para.textContent = `You win, ${playerSelection} beats ${computerSelection}`;
+        para.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
         playerScore++;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
@@ -162,7 +162,7 @@ function playRound(playerSelection, computerSelection, optionId) {
         scoreTracker();
 
     } else if (playerSelection === "electric" && computerSelection === "grass" || playerSelection === "water" && computerSelection === "electric") {
-        para.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+        para.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
         computerScore++;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
@@ -170,7 +170,7 @@ function playRound(playerSelection, computerSelection, optionId) {
         scoreTracker();
 
     } else {
-        para.textContent = `You lose, ${computerSelection} beats ${playerSelection}`;
+        para.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
         computerScore++;
         para2.textContent = `You: ${playerScore} Computer: ${computerScore}`;
         showUserOption(optionId);
