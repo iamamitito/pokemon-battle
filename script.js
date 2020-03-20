@@ -110,14 +110,14 @@ function restartGame() {
 
 function scoreTracker() {
     if (computerHP.value === 0) {
-        button.textContent = "Restart game"
+        button.textContent = "Battle again!"
         result.appendChild(button);
         optionsContainer.style.visibility = 'hidden';
         button.addEventListener("click", function () {
             restartGame()
         })
     } else if (playerHP.value === 0) {
-        button.textContent = "Restart game"
+        button.textContent = "Battle again!"
         result.appendChild(button);
         optionsContainer.style.visibility = 'hidden';
         button.addEventListener("click", function () {
