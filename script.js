@@ -98,7 +98,7 @@ function restartGame() {
     computerOption.textContent = "";
     userImg.src = '';
     computerImg.src = '';
-    optionsContainer.style.display = 'none';
+    optionsContainer.style.visibility = 'visible';
     choicesContainer.style.display = 'none';
     pikachu.style.display = 'none';
     audio.pause();
