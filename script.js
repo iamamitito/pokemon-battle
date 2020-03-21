@@ -15,7 +15,7 @@ const optionsContainer = document.querySelector('.options-container');
 const userOptions = document.querySelector('option');
 
 
-/* Divs that display player and computer's choices */
+/* Divs that display player and computer's choices in battle */
 const userChoice = document.querySelector('#userChoice');
 const computerChoice = document.querySelector('#computerChoice');
 const choicesContainer = document.querySelector('.choices');
