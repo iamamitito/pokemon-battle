@@ -23,6 +23,7 @@ const choicesContainer = document.querySelector('.choices');
 const result = document.querySelector('#result');
 const audio = document.querySelector('.sound');
 const muteButton = document.querySelector('.mute-button');
+const muteIcon = document.querySelector('.mute-icon');
 let userImg = document.createElement('img');
 let computerImg = document.createElement('img');
 let battleDescription = document.createElement('p');
@@ -184,7 +185,12 @@ function startSound() {
 }
 
 function muteSound() {
-    audio.volume = 0;
+    audio.muted = !audio.muted;
+    if (audio.muted == true) {
+        muteIcon.src = 'img/unmute.png';
+    } else {
+        muteIcon.src = 'img/mute.png';
+    }
 }
 
 
