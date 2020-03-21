@@ -5,6 +5,7 @@ const charmander = document.querySelector('#charmander');
 const squirtle = document.querySelector('#squirtle')
 const bulbasaur = document.querySelector('#bulbasaur');
 const pikachu = document.querySelector('#pikachu');
+const lapras = document.querySelector('#lapras');
 
 /* Divs that contain the progress of player and computer */
 const playerHP = document.querySelector('#player-hp');
@@ -24,22 +25,31 @@ const result = document.querySelector('#result');
 const audio = document.querySelector('.sound');
 const muteButton = document.querySelector('.mute-button');
 const muteIcon = document.querySelector('.mute-icon');
-let userImg = document.createElement('img');
-let computerImg = document.createElement('img');
-let battleDescription = document.createElement('p');
-let finalMessage = document.querySelector('.final-message');
-let button = document.createElement('button');
+const userImg = document.createElement('img');
+const computerImg = document.createElement('img');
+const button = document.createElement('button');
+
 let userOption = document.createElement('span');
 let computerOption = document.createElement('span');
+let battleDescription = document.createElement('p');
+let finalMessage = document.querySelector('.final-message');
 
 
-/* pikachu is not available to use until the user gets 5 points */
+/* pikachu and lapras are not available to use */
 pikachu.style.display = 'none';
+lapras.style.display = 'none';
 
-/* Pikachu is displayed after the user is "half winning" */
+/* Pikachu is displayed after the computer loses 50 points */
 function showPikachu() {
-    if (computerHP.value <= 50) {
+    if (computerHP.value <= 100) {
         pikachu.style.display = 'block';
+    }
+}
+
+/* Lapras is displayed after the computer loses 50 points */
+function showLapras() {
+    if (computerHP.value <= 50) {
+        lapras.style.display = 'block';
     }
 }
 
@@ -47,7 +57,7 @@ function showPikachu() {
 battleDescription.textContent = "Start the battle! Choose your pokémon!";
 
 function computerPlay() {
-    const options = ["fire", "water", "grass", "electric"];
+    const options = ["fire", "water", "grass", "electric", "ice"];
     return options[Math.floor(Math.random() * options.length)];
 }
 
@@ -62,9 +72,12 @@ function showUserOption(optionId) {
         userImg.src = 'img/usersquirtle.png';
         userImg.width = "100";
 
-
     } else if (optionId === 'pikachu') {
         userImg.src = 'img/userpikachu.png';
+        userImg.width = "100";
+
+    } else if (optionId === 'lapras') {
+        userImg.src = 'img/userlapras.png';
         userImg.width = "100";
 
     } else {
@@ -87,6 +100,10 @@ function showComputerOption(computerSelection) {
         computerImg.src = 'img/computerpikachu.png';
         computerImg.width = "45";
 
+    } else if (computerSelection === 'ice') {
+        computerImg.src = 'img/computerlapras.png';
+        computerImg.width = "45";
+
     } else {
         computerImg.src = 'img/computerbulbasaur.png';
         computerImg.width = "45";
@@ -103,6 +120,7 @@ function restartGame() {
     optionsContainer.style.visibility = 'visible';
     choicesContainer.style.display = 'flex';
     pikachu.style.display = 'none';
+    lapras.style.display = 'none';
     audio.pause();
     audio.currentTime = 0;
     audio.volume = 1;
@@ -136,7 +154,6 @@ function scoreTracker() {
     }
 }
 
-
 function playRound(playerSelection, computerSelection, optionId) {
     if (computerSelection === playerSelection) {
         battleDescription.textContent = `It's a tie! You both chose ${optionId}`;
@@ -169,6 +186,26 @@ function playRound(playerSelection, computerSelection, optionId) {
         playerHP.value -= 10;
         scoreTracker();
 
+    } else if (playerSelection === "ice" && computerSelection === "fire" || playerSelection === "grass" && computerSelection === "ice") {
+        battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
+        showUserOption(optionId);
+        showComputerOption(computerSelection);
+        playerHP.value -= 10;
+        scoreTracker();
+
+    } else if (playerSelection === "ice" && computerSelection === "grass" || playerSelection === "fire" && computerSelection === "ice") {
+        battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
+        showUserOption(optionId);
+        showComputerOption(computerSelection);
+        computerHP.value -= 10;
+        scoreTracker();
+
+    } else if (playerSelection === "ice" && computerSelection === "electric" || playerSelection === "ice" && computerSelection === "water" || playerSelection === "electric" && computerSelection === "ice" || playerSelection === "water" && computerSelection === "ice") {
+        battleDescription.textContent = 'Nothing happened! Try again';
+        showUserOption(optionId);
+        showComputerOption(computerSelection);
+        scoreTracker();
+
     } else {
         battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
         showUserOption(optionId);
@@ -177,6 +214,7 @@ function playRound(playerSelection, computerSelection, optionId) {
         scoreTracker();
     }
     showPikachu();
+    showLapras()
 }
 
 function startSound() {
@@ -206,6 +244,10 @@ bulbasaur.addEventListener('click', function () {
 pikachu.addEventListener('click', function () {
     playRound("electric", computerPlay(), this.id)
 });
+lapras.addEventListener('click', function () {
+    playRound("ice", computerPlay(), this.id)
+});
+
 charmander.addEventListener("click", startSound);
 squirtle.addEventListener("click", startSound);
 bulbasaur.addEventListener("click", startSound);
