@@ -124,8 +124,8 @@ function restartGame() {
     audio.pause();
     audio.currentTime = 0;
     audio.volume = 1;
-    playerHP.value = 100;
-    computerHP.value = 100;
+    playerHP.value = 150;
+    computerHP.value = 150;
     finalMessage.textContent = '';
 }
 
