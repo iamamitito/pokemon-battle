@@ -17,7 +17,7 @@ body {
     background-image: url('../img/field.png');
     background-size: cover;
     background-repeat: no-repeat;
-    min-height: 700px;
+    min-height: 750px;
     border-radius: 1.5rem;
     box-shadow:0 0 50px rgba(0,0,0,0.5) inset,0 1px rgba(212,152,125,0.2) inset,0 5px 15px rgba(0,0,0,0.5);
 }
@@ -34,9 +34,10 @@ body {
 }
 #result {
     text-align: center;
-    font-size: 15px;
+    font-size: 11px;
     color:white;
     text-shadow: 1px 1px 2px #000000;
+    padding-bottom: 25px;
 }
 .options-container {
     width: fit-content;
@@ -60,11 +61,12 @@ body {
 }
 
 .battle-field {
-    height: 40vh;
-    padding-top:15%;
+    height: 200px;
+    padding-top: 20%;
     color: white;
     text-shadow: 1px 1px 2px #000000;
     text-align: center;
+    justify-content: center;
 }
 
 .choices {
@@ -90,7 +92,7 @@ body {
 }
 
 #userChoice, #computerChoice {
-    padding: 15px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     font-size: 12px;
@@ -148,11 +150,11 @@ progress {
         font-size: 21px;
     }
     .option {
-        width: 15vw;
+        width: 12vw;
         text-align: center;
     }
     .option img {
-        width: 40px;
+        width: 30px;
     }
     .mute-button img {
         width: 30px;
@@ -172,7 +174,6 @@ progress {
     @media screen and (min-height: 800px) {
         .battle-field {
             padding-top: 65%;
-            height: 30vh;
         }
     
     }
