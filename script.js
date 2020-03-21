@@ -15,7 +15,6 @@ const computerHP = document.querySelector('#computer-hp');
 const optionsContainer = document.querySelector('.options-container');
 const userOptions = document.querySelector('option');
 
-
 /* Divs that display player and computer's choices in battle */
 const userChoice = document.querySelector('#userChoice');
 const computerChoice = document.querySelector('#computerChoice');
@@ -34,7 +33,6 @@ let computerOption = document.createElement('span');
 let battleDescription = document.createElement('p');
 let finalMessage = document.querySelector('.final-message');
 
-
 /* pikachu and lapras are not available to use */
 pikachu.style.display = 'none';
 lapras.style.display = 'none';
@@ -46,13 +44,12 @@ function showPikachu() {
     }
 }
 
-/* Lapras is displayed after the computer loses 50 points */
+/* Lapras is displayed after the computer loses 100 points */
 function showLapras() {
     if (computerHP.value <= 50) {
         lapras.style.display = 'block';
     }
 }
-
 
 battleDescription.textContent = "Start the battle! Choose your pokémon!";
 
@@ -60,7 +57,6 @@ function computerPlay() {
     const options = ["fire", "water", "grass", "electric", "ice"];
     return options[Math.floor(Math.random() * options.length)];
 }
-
 
 function showUserOption(optionId) {
     userOption.textContent = "You";
@@ -145,7 +141,7 @@ function scoreTracker() {
         result.appendChild(button);
         optionsContainer.style.visibility = 'hidden';
         choicesContainer.style.display = 'none';
-        battleDescription.textContent = 'You are not such a good good trainer, are you? Maybe next time.';
+        battleDescription.textContent = 'You lost the battle... Maybe next time.';
         button.addEventListener("click", function () {
             restartGame()
         })
@@ -155,66 +151,55 @@ function scoreTracker() {
 }
 
 function playRound(playerSelection, computerSelection, optionId) {
-    if (computerSelection === playerSelection) {
-        battleDescription.textContent = `It's a tie! You both chose ${optionId}`;
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-
-    } else if (playerSelection === "fire" && computerSelection === "grass" || playerSelection === "water" && computerSelection === "fire" || playerSelection === "grass" && computerSelection === "water") {
-        battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-        computerHP.value -= 10;
-        scoreTracker();
-
-    } else if (playerSelection === "electric" && computerSelection === "fire" || playerSelection === "fire" && computerSelection === "electric") {
-        battleDescription.textContent = `It's a tie! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} does NOT beat ${computerSelection}`;
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-
-    } else if (playerSelection === "electric" && computerSelection === "water" || playerSelection === "grass" && computerSelection === "electric") {
-        battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-        computerHP.value -= 10;
-        scoreTracker();
-
-    } else if (playerSelection === "electric" && computerSelection === "grass" || playerSelection === "water" && computerSelection === "electric") {
-        battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-        playerHP.value -= 10;
-        scoreTracker();
-
-    } else if (playerSelection === "ice" && computerSelection === "fire" || playerSelection === "grass" && computerSelection === "ice") {
-        battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-        playerHP.value -= 10;
-        scoreTracker();
-
-    } else if (playerSelection === "ice" && computerSelection === "grass" || playerSelection === "fire" && computerSelection === "ice") {
-        battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-        computerHP.value -= 10;
-        scoreTracker();
-
-    } else if (playerSelection === "ice" && computerSelection === "electric" || playerSelection === "ice" && computerSelection === "water" || playerSelection === "electric" && computerSelection === "ice" || playerSelection === "water" && computerSelection === "ice") {
-        battleDescription.textContent = 'Nothing happened! Try again';
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-        scoreTracker();
-
-    } else {
-        battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
-        showUserOption(optionId);
-        showComputerOption(computerSelection);
-        playerHP.value -= 10;
-        scoreTracker();
+    switch (playerSelection + computerSelection) {
+        case 'firegrass':
+        case 'waterfire':
+        case 'grasswater':
+        case 'electricwater':
+        case 'grasselectric':
+        case 'icegrass':
+        case 'fireice':
+            battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+            computerHP.value -= 10;
+            scoreTracker();
+            break;
+        case 'grassfire':
+        case 'firewater':
+        case 'watergrass':
+        case 'waterelectric':
+        case 'electricgrass':
+        case 'grassice':
+        case 'icefire':
+            battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+            playerHP.value -= 10;
+            scoreTracker();
+            break;
+        case 'grassgrass':
+        case 'firefire':
+        case 'waterwater':
+        case 'electricelectric':
+        case 'iceice':
+            battleDescription.textContent = `It's a tie! You both chose ${optionId}`;
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+            break;
+        case 'electricfire':
+        case 'fireelectric':
+        case 'iceelectric':
+        case 'electricice':
+        case 'icewater':
+        case 'waterice':
+            battleDescription.textContent = `Nothing happened! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} does NOT beat ${computerSelection}`;
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+            break;
     }
     showPikachu();
-    showLapras()
+    showLapras();
 }
 
 function startSound() {
@@ -230,7 +215,6 @@ function muteSound() {
         muteIcon.src = 'img/mute.png';
     }
 }
-
 
 charmander.addEventListener('click', function () {
     playRound("fire", computerPlay(), this.id)
