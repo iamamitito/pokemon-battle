@@ -184,7 +184,7 @@ function playRound(playerSelection, computerSelection, optionId) {
             battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
             showUserOption(optionId);
             showComputerOption(computerSelection);
-            computerHP.value -= 30;
+            computerHP.value -= 10;
             scoreTracker();
             break;
         case 'grassfire':
