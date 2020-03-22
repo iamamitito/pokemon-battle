@@ -176,12 +176,12 @@ function playRound(playerSelection, computerSelection, optionId) {
         const winningMessages = [`Perfect! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`, "Your attack was super effective!", `Great, ${optionId}! that was very effective!`];
         return winningMessages[Math.floor(Math.random() * winningMessages.length)];
     }
-    
+
     function displayLosingMessage() {
         const losingMessages = [`Oh no! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`, `That was not very effective, ${optionId} is harmed`, `That's bad, ${computerSelection} wins over ${playerSelection}`];
         return losingMessages[Math.floor(Math.random() * losingMessages.length)];
     }
-    
+
     switch (playerSelection + computerSelection) {
         case 'firegrass':
         case 'waterfire':
@@ -204,7 +204,6 @@ function playRound(playerSelection, computerSelection, optionId) {
         case 'watergrass':
         case 'waterelectric':
         case 'electricgrass':
-        case 'grassice':
         case 'icefire':
         case 'rockwater':
         case 'firerock':
@@ -238,12 +237,19 @@ function playRound(playerSelection, computerSelection, optionId) {
             showUserOption(optionId);
             showComputerOption(computerSelection);
             break;
-            /* Articuno hinders the opponent by 20 points */
+        /* Articuno hinders Bulbasaur by 20 points */
         case 'icegrass':
             battleDescription.textContent = `${optionId.substring(0, 1).toUpperCase() + optionId.substring(1).toLowerCase()} beats Bulbasaur by 20 points!`;
             showUserOption(optionId);
             showComputerOption(computerSelection);
             computerHP.value -= 20;
+            scoreTracker();
+            break;
+        case 'grassice':
+            battleDescription.textContent = 'Oh no! Bulbasaur is beaten by 20 points!';
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+            playerHP.value -= 20;
             scoreTracker();
             break;
     }
