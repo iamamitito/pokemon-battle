@@ -20,8 +20,8 @@ const userOptions = document.querySelector('option');
 const userChoice = document.querySelector('#userChoice');
 const computerChoice = document.querySelector('#computerChoice');
 const choicesContainer = document.querySelector('.choices');
-
-const result = document.querySelector('#result');
+const battleField = document.querySelector('.battle-field');
+const battleDescriptionBox = document.querySelector('#battle-description-box');
 const audio = document.querySelector('.sound');
 const muteButton = document.querySelector('.mute-button');
 const muteIcon = document.querySelector('.mute-icon');
@@ -34,7 +34,7 @@ let computerOption = document.createElement('span');
 let battleDescription = document.createElement('p');
 let finalMessage = document.querySelector('.final-message');
 
-/* pikachu, articuno and onix are not available to use */
+/* pikachu, onix and articuno are not available to use */
 pikachu.style.display = 'none';
 articuno.style.display = 'none';
 onix.style.display = 'none';
@@ -46,17 +46,17 @@ function showPikachu() {
     }
 }
 
-/* Articuno is displayed after the computer loses 100 points */
-function showArticuno() {
+/* Onix after 100 points */
+function showOnix() {
     if (computerHP.value <= 100) {
-        articuno.style.display = 'block';
+        onix.style.display = 'block';
     }
 }
 
-/* Onix is displayed after the computer loses 150 points */
-function showOnix() {
+/* Articuno after 150 points */
+function showArticuno() {
     if (computerHP.value <= 50) {
-        onix.style.display = 'block';
+        articuno.style.display = 'block';
     }
 }
 
@@ -66,6 +66,7 @@ function computerPlay() {
     const options = ["fire", "water", "grass", "electric", "ice", "rock"];
     return options[Math.floor(Math.random() * options.length)];
 }
+
 
 function showUserOption(optionId) {
     userOption.textContent = "You";
@@ -117,7 +118,7 @@ function showComputerOption(computerSelection) {
         computerImg.src = 'img/computeronix.png';
         computerImg.width = "55";
 
-    }else {
+    } else {
         computerImg.src = 'img/computerbulbasaur.png';
         computerImg.width = "40";
     }
@@ -125,7 +126,7 @@ function showComputerOption(computerSelection) {
 }
 function restartGame() {
     battleDescription.textContent = "Start the battle! Choose your pokémon!";
-    result.removeChild(button);
+    battleField.removeChild(button);
     userOption.textContent = '';
     computerOption.textContent = '';
     userImg.src = '';
@@ -146,20 +147,21 @@ function restartGame() {
 function scoreTracker() {
     if (computerHP.value === 0) {
         button.textContent = 'Battle again?';
-        result.appendChild(button);
+        battleField.appendChild(button);
         optionsContainer.style.visibility = 'hidden';
         choicesContainer.style.display = 'none';
         battleDescription.textContent = '';
-        finalMessage.textContent = 'Congratulations! You are a great trainer!';
+        finalMessage.textContent = 'Congrats! You are a great trainer!';
         button.addEventListener("click", function () {
             restartGame()
         })
     } else if (playerHP.value === 0) {
         button.textContent = 'Battle again?';
-        result.appendChild(button);
+        battleField.appendChild(button);
         optionsContainer.style.visibility = 'hidden';
         choicesContainer.style.display = 'none';
-        battleDescription.textContent = 'You lost the battle... Maybe next time.';
+        battleDescription.textContent = '';
+        finalMessage.textContent = 'You lost the battle... Maybe next time.';
         button.addEventListener("click", function () {
             restartGame()
         })
@@ -169,19 +171,29 @@ function scoreTracker() {
 }
 
 function playRound(playerSelection, computerSelection, optionId) {
+
+    function displayWinningMessage() {
+        const winningMessages = [`Perfect! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`, "Your attack was super effective!", `Great, ${optionId}! that was very effective!`];
+        return winningMessages[Math.floor(Math.random() * winningMessages.length)];
+    }
+    
+    function displayLosingMessage() {
+        const losingMessages = [`Oh no! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`, `That was not very effective, ${optionId} is harmed`, `That's bad, ${computerSelection} wins over ${playerSelection}`];
+        return losingMessages[Math.floor(Math.random() * losingMessages.length)];
+    }
+    
     switch (playerSelection + computerSelection) {
         case 'firegrass':
         case 'waterfire':
         case 'grasswater':
         case 'electricwater':
         case 'grasselectric':
-        case 'icegrass':
         case 'fireice':
         case 'rockice':
         case 'rockfire':
         case 'waterrock':
         case 'grassrock':
-            battleDescription.textContent = `You win! ${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} beats ${computerSelection}`;
+            battleDescription.textContent = `${displayWinningMessage()}`;
             showUserOption(optionId);
             showComputerOption(computerSelection);
             computerHP.value -= 10;
@@ -197,7 +209,7 @@ function playRound(playerSelection, computerSelection, optionId) {
         case 'rockwater':
         case 'firerock':
         case 'rockgrass':
-            battleDescription.textContent = `You lose! ${computerSelection.substring(0, 1).toUpperCase() + computerSelection.substring(1).toLowerCase()} beats ${playerSelection}`;
+            battleDescription.textContent = `${displayLosingMessage()}`;
             showUserOption(optionId);
             showComputerOption(computerSelection);
             playerHP.value -= 10;
@@ -221,10 +233,18 @@ function playRound(playerSelection, computerSelection, optionId) {
         case 'waterice':
         case 'rockelectric':
         case 'electricrock':
-        case 'icerock':   
+        case 'icerock':
             battleDescription.textContent = `${playerSelection.substring(0, 1).toUpperCase() + playerSelection.substring(1).toLowerCase()} doesn't beat ${computerSelection}!`;
             showUserOption(optionId);
             showComputerOption(computerSelection);
+            break;
+            /* Articuno hinders the opponent by 20 points */
+        case 'icegrass':
+            battleDescription.textContent = `${optionId.substring(0, 1).toUpperCase() + optionId.substring(1).toLowerCase()} beats Bulbasaur by 20 points!`;
+            showUserOption(optionId);
+            showComputerOption(computerSelection);
+            computerHP.value -= 20;
+            scoreTracker();
             break;
     }
     showPikachu();
@@ -270,7 +290,7 @@ squirtle.addEventListener("click", startSound);
 bulbasaur.addEventListener("click", startSound);
 muteButton.addEventListener("click", muteSound);
 
-result.appendChild(battleDescription);
+battleDescriptionBox.appendChild(battleDescription);
 userChoice.appendChild(userOption);
 userChoice.appendChild(userImg);
 computerChoice.appendChild(computerOption);
