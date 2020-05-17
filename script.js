@@ -152,9 +152,7 @@ function scoreTracker() {
         choicesContainer.style.display = 'none';
         battleDescription.textContent = '';
         finalMessage.textContent = 'Congrats! You are a great trainer!';
-        button.addEventListener("click", function () {
-            restartGame()
-        })
+        button.addEventListener("click", restartGame)
     } else if (playerHP.value === 0) {
         button.textContent = 'Battle again?';
         battleField.appendChild(button);
@@ -162,9 +160,7 @@ function scoreTracker() {
         choicesContainer.style.display = 'none';
         battleDescription.textContent = '';
         finalMessage.textContent = 'You lost the battle... Maybe next time.';
-        button.addEventListener("click", function () {
-            restartGame()
-        })
+        button.addEventListener("click", restartGame)
     } else {
         return;
     }
